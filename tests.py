@@ -4,6 +4,7 @@
 import unittest
 import sys
 import ety
+from ety.data import generate
 
 
 def test_circular_etymology():
@@ -203,6 +204,28 @@ class TestEty(unittest.TestCase):
         linter.run(["."])
 
         self.assertEqual(linter.result_count, 0)
+
+
+class TestEtyData(unittest.TestCase):
+    def test_split_elements_two(self):
+        # Arrange
+        compound = "rel:etymology"
+
+        # Act
+        output = generate.split_elements(compound)
+
+        # Assert
+        self.assertEqual(output, ["rel", "etymology"])
+
+    def test_split_elements_three(self):
+        # Arrange
+        compound = "eng: w:Jane Austen"
+
+        # Act
+        output = generate.split_elements(compound)
+
+        # Assert
+        self.assertEqual(output, ["eng", "w:Jane Austen"])
 
 
 if __name__ == "__main__":
